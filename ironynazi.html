@@ -32,10 +32,22 @@
 </template>
 
 <template name="listItem">
-    <div class="listItem">
-        <img class="listItem__img" src="{{ response.url }}">
-        <pre class="listItem__pre">{{ response.url }}</pre>
-    </div>
+        <div class="listItem">
+            {{#if uploading}}
+                <div class="listItem__upload">
+                    uploading ... {{percent_uploaded}}
+                </div>
+            {{else}}
+                {{#if response.url}}
+                    <img class="listItem__img" src="{{ response.url }}">
+                    <pre class="listItem__pre">{{ response.url }}</pre>
+                {{else}}
+                    <div class="listItem__upload">
+                        processing ...
+                    </div>
+                {{/if}}
+            {{/if}}
+        </div>
 </template>
 
 <template name="uploading">

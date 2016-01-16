@@ -31,6 +31,13 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.listItem.helpers({
+        "uploading": function() {
+            if(this.percent_uploaded < 100) return true;
+            return false;
+        }
+    });
+
     Template.createForm.events({
         'change input[type=file]': function(e) {
             var fileName = '',
@@ -50,15 +57,13 @@ if (Meteor.isClient) {
             var text = document.querySelector('input[type=text]').value.trim();
             if (!text) return alert('u haz no text');
 
-            console.log('uploading', text, file);
-
             Session.set('uploading', true);
 
             Cloudinary.upload([file], {
                 transformation: [{
-                    crop: "fill",
+                    // crop: "fill",
                     width: 400,
-                    height: 600,
+                    // height: 600,
                 }, {
                     crop: "fit",
                     width: 350,
