@@ -3,12 +3,46 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  {{> layout}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="layout">
+  <div class="layout">
+    {{#unless uploading}}
+      {{> createForm}}
+    {{else}}
+      {{> uploading}}
+    {{/unless}}
+
+    {{> listImages}}
+  </div>
+</template>
+
+<template name="createForm">
+  <form class="createForm" name="create">
+    <input name="file" type="file" size="50" accept="iamge/*">
+    <input type="text" placeholder="ur text">
+    <button type="submit">Gogogo</button>
+  </form>
+</template>
+
+<template name="listImages">
+  <div class="listImages">
+    {{#each images}}
+      {{> listItemImage}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="listItemImage">
+  <div class="listItemImage">
+    <img src="{{ response.url }}">
+    <pre>{{ response.url }}</pre>
+  </div>
+</template>
+
+<template name="uploading">
+  <div class="uploading">
+    <p>le loading ... yadda ya ...</p>
+  </div>
 </template>
