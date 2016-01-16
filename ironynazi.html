@@ -1,48 +1,45 @@
 <head>
-  <title>ironynazi</title>
+    <title>ironynazi</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 </head>
 
 <body>
-  {{> layout}}
+    {{> layout}}
 </body>
 
 <template name="layout">
-  <div class="layout">
-    {{#unless uploading}}
-      {{> createForm}}
-    {{else}}
-      {{> uploading}}
-    {{/unless}}
-
-    {{> listImages}}
-  </div>
+    <div class="layout">
+        {{#unless uploading}} {{> createForm}} {{else}} {{> uploading}} {{/unless}} {{> listImages}}
+    </div>
 </template>
 
 <template name="createForm">
-  <form class="createForm" name="create">
-    <input name="file" type="file" size="50" accept="iamge/*">
-    <input type="text" placeholder="ur text">
-    <button type="submit">Gogogo</button>
-  </form>
+    <form class="createForm" name="create">
+
+        <input name="file" type="file" id="file" class="createForm__fileInput" size="50" accept="iamge/*">
+        <label for="file" class="createForm__fileLabel"><span>Choose an image</span></label>
+
+        <input type="text" class="createForm__textInput" placeholder="Ur Text">
+
+        <button type="submit" class="createForm__submitButton">Feel the irony</button>
+    </form>
 </template>
 
 <template name="listImages">
-  <div class="listImages">
-    {{#each images}}
-      {{> listItemImage}}
-    {{/each}}
-  </div>
+    <div class="listImages">
+        {{#each images}} {{> listItem}} {{/each}}
+    </div>
 </template>
 
-<template name="listItemImage">
-  <div class="listItemImage">
-    <img src="{{ response.url }}">
-    <pre>{{ response.url }}</pre>
-  </div>
+<template name="listItem">
+    <div class="listItem">
+        <img class="listItem__img" src="{{ response.url }}">
+        <pre class="listItem__pre">{{ response.url }}</pre>
+    </div>
 </template>
 
 <template name="uploading">
-  <div class="uploading">
-    <p>le loading ... yadda ya ...</p>
-  </div>
+    <div class="uploading">
+        <p>le loading ... yadda ya ...</p>
+    </div>
 </template>

@@ -1,0 +1,124 @@
+.gui-button() {
+    color: black;
+    background-color: white;
+    display: inline-block;
+    border:3px solid black;
+    padding:15px;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+        .gui-button--hover();
+    }
+
+    &:focus {
+        outline: 0px;
+    }
+}
+
+.gui-button--hover() {
+    cursor: pointer;
+    background-color: red;
+}
+
+
+.gui-input() {
+    color: darkgray;
+    background-color: white;
+    display: inline-block;
+    border:3px solid darkgray;
+    padding:15px;
+    text-transform: uppercase;
+
+    &:hover {
+        .gui-input--hover();
+    }
+
+    &:focus {
+        .gui-input--focus();
+    }
+}
+
+.gui-input--hover() {
+    cursor: text;
+    // background-color: lightgray;
+    color:black;
+}
+
+.gui-input--focus() {
+    outline: 0px;
+    cursor: text;
+    color:black;
+    // background-color: red;
+}
+
+.layout {
+    padding: 15px;
+}
+
+.createForm {
+    text-align: center;
+
+    &__fileLabel, &__textInput, &__submitButton {
+        display: block;
+        max-width: 400px;
+        width: 100%;
+        margin:15px auto;
+    }
+
+    &__fileInput {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+    &__fileLabel {
+        .gui-button();
+    }
+    &__fileInput:focus + &__fileLabel,
+    &__fileInput + &__fileLabel:hover {
+        .gui-button--hover();
+    }
+    &__fileInput + &__fileLabel {
+        cursor: pointer;
+    }
+    &__fileInput:focus + &__fileLabel {
+        // outline: 1px dotted #000;
+        // outline: -webkit-focus-ring-color auto 5px;
+    }
+    &__fileInput + &__fileLabel * {
+        pointer-events: none;
+    }
+
+    &__textInput {
+        .gui-input();
+        text-align:center;
+    }
+
+    &__submitButton {
+        .gui-button();
+        background:black;
+        color:white;
+    }
+}
+
+.listImages {
+    text-align: center;
+}
+
+.listItem {
+    &__img {
+        display: block;
+        margin:0 auto;
+    }
+
+    &__pre {
+        .gui-input();
+        word-break: break-all;
+        white-space: normal;
+        max-width: 400px;
+    }
+}

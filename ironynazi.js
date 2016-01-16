@@ -27,11 +27,20 @@ if (Meteor.isClient) {
 
     Template.listImages.helpers({
         "images": function() {
-            return Cloudinary.collection.find();
+            return Cloudinary.collection.find({}, {sort: {"response.created_at": -1}});
         }
     });
 
     Template.createForm.events({
+        'change input[type=file]': function(e) {
+            var fileName = '',
+                label = e.target.nextElementSibling,
+                fileName = e.target.value.split('\\').pop();
+
+            if (!fileName) fileName = 'Choose an image again';
+
+            label.querySelector('span').innerHTML = fileName;
+        },
         'submit form': function(e) {
             e.preventDefault();
 
@@ -47,12 +56,11 @@ if (Meteor.isClient) {
 
             Cloudinary.upload([file], {
                 transformation: [{
-                    crop:"fill",
+                    crop: "fill",
                     width: 400,
                     height: 600,
-                },
-                    {
-                    crop:"fit",
+                }, {
+                    crop: "fit",
                     width: 350,
                     height: 550,
                     overlay: "text:impact_50_bold_stroke:" + text,
@@ -62,7 +70,7 @@ if (Meteor.isClient) {
             }, function(err, res) {
                 Session.set('uploading', false);
 
-                if(err) {
+                if (err) {
                     alert('ARRRRRR! ' + err.error.message);
                     return console.error(err);
                 }

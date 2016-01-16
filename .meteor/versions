@@ -34,8 +34,10 @@ insecure@1.0.4
 jquery@1.11.4
 launch-screen@1.0.4
 lepozepo:cloudinary@4.1.2
+less@2.5.1
 livedata@1.0.15
 logging@1.0.8
+marxo:canonical.css@1.1.1
 meteor@1.1.10
 meteor-base@1.0.1
 minifiers@1.1.7
