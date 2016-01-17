@@ -29,7 +29,7 @@
     display: inline-block;
     border:3px solid darkgray;
     padding:15px;
-    text-transform: uppercase;
+    // text-transform: uppercase;
 
     &:hover {
         .gui-input--hover();
@@ -105,11 +105,18 @@
     }
 }
 
-.listImages {
+.uploadedList {
     text-align: center;
 }
 
-.listItem {
+.uploadedListItem {
+    .gui-input();
+}
+
+.ironyList {
+    text-align: center;
+}
+.ironyListItem {
     &__img {
         display: block;
         margin:0 auto;
@@ -120,9 +127,5 @@
         word-break: break-all;
         white-space: normal;
         max-width: 400px;
-    }
-
-    &__upload {
-        .gui-input();
     }
 }

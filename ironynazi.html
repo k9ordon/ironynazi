@@ -9,7 +9,9 @@
 
 <template name="layout">
     <div class="layout">
-        {{#unless uploading}} {{> createForm}} {{else}} {{> uploading}} {{/unless}} {{> listImages}}
+        {{> createForm}}
+        {{> uploadedList}}
+        {{> ironyList}}
     </div>
 </template>
 
@@ -17,41 +19,52 @@
     <form class="createForm" name="create">
 
         <input name="file" type="file" id="file" class="createForm__fileInput" size="50" accept="iamge/*">
-        <label for="file" class="createForm__fileLabel"><span>Choose an image</span></label>
+        <label for="file" class="createForm__fileLabel">Choose an image</label>
 
-        <input type="text" class="createForm__textInput" placeholder="Ur Text">
+        <input type="text" class="createForm__textInput" placeholder="TYPE SOME WORDS">
 
         <button type="submit" class="createForm__submitButton">Feel the irony</button>
     </form>
 </template>
 
-<template name="listImages">
-    <div class="listImages">
-        {{#each images}} {{> listItem}} {{/each}}
+<template name="uploadedList">
+    <div class="uploadedList">
+        {{#each items}}
+            {{> uploadedListItem}}
+        {{/each}}
     </div>
 </template>
+<template name="uploadedListItem">
+    {{#if uploading}}
+        <div class="uploadedListItem">
+            uploading ... {{percent_uploaded}}
+        </div>
+    {{else}}
+        {{#unless response.url}}
+            <div class="uploadedListItem">
+                processing ...
+            </div>
+        {{/unless}}
+    {{/if}}
+</template>
 
-<template name="listItem">
-        <div class="listItem">
-            {{#if uploading}}
-                <div class="listItem__upload">
-                    uploading ... {{percent_uploaded}}
-                </div>
+<template name="ironyList">
+    <div class="ironyList">
+        <h3 class="ironyList__header">Latest</h3>
+        {{#each latest}}
+            {{> ironyListItem}}
+        {{/each}}
+    </div>
+</template>
+<template name="ironyListItem">
+        <div class="ironyListItem">
+            {{#if cloudinary.url}}
+                <img class="ironyListItem__img" src="{{ cloudinary.url }}" />
+                <pre class="ironyListItem__pre">{{ cloudinary.url }}</pre>
             {{else}}
-                {{#if response.url}}
-                    <img class="listItem__img" src="{{ response.url }}">
-                    <pre class="listItem__pre">{{ response.url }}</pre>
-                {{else}}
-                    <div class="listItem__upload">
-                        processing ...
-                    </div>
-                {{/if}}
+                <div class="ironyListItem__upload">
+                    loading ...
+                </div>
             {{/if}}
         </div>
-</template>
-
-<template name="uploading">
-    <div class="uploading">
-        <p>le loading ... yadda ya ...</p>
-    </div>
 </template>

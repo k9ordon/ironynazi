@@ -1,3 +1,5 @@
+Ironies = new Meteor.Collection("ironies");
+
 if (Meteor.isServer) {
     Meteor.startup(function() {
         if (!Meteor.settings.cloudinary.cloud_name) throw new Error('Missing config');
@@ -8,9 +10,28 @@ if (Meteor.isServer) {
             api_secret: Meteor.settings.cloudinary.api_secret
         });
     });
+
+    Meteor.methods({
+        addIrony: function(irony) {
+            console.log('add irony');
+            irony.date = new Date();
+
+            Ironies.insert(irony);
+        }
+    });
+
+    Meteor.publish("latestIronies", function() {
+        return Ironies.find({}, {
+            sort: {
+                date: -1
+            }
+        });
+    });
 }
 
 if (Meteor.isClient) {
+
+    Meteor.subscribe("latestIronies");
 
     Template.registerHelper('imgUrl', function(input) {
         return Session.get('imgUrl');
@@ -25,16 +46,30 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.listImages.helpers({
-        "images": function() {
-            return Cloudinary.collection.find({}, {sort: {"response.created_at": -1}});
+    Template.uploadedList.helpers({
+        "items": function() {
+            return Cloudinary.collection.find({}, {
+                sort: {
+                    "response.created_at": -1
+                }
+            });
         }
     });
 
-    Template.listItem.helpers({
+    Template.uploadedListItem.helpers({
         "uploading": function() {
-            if(this.percent_uploaded < 100) return true;
+            if (this.percent_uploaded < 100) return true;
             return false;
+        }
+    });
+
+    Template.ironyList.helpers({
+        "latest": function() {
+            return Ironies.find({}, {
+                sort: {
+                    date: -1
+                }
+            });
         }
     });
 
@@ -46,18 +81,23 @@ if (Meteor.isClient) {
 
             if (!fileName) fileName = 'Choose an image again';
 
-            label.querySelector('span').innerHTML = fileName;
+            label.innerHTML = fileName;
         },
         'submit form': function(e) {
             e.preventDefault();
 
-            var file = document.querySelector('input[type=file]').files[0];
+            var file = document.querySelector('.createForm__fileInput').files[0];
             if (!file) return alert('u haz no image');
 
-            var text = document.querySelector('input[type=text]').value.trim();
+            var text = document.querySelector('.createForm__textInput').value.trim();
             if (!text) return alert('u haz no text');
 
             Session.set('uploading', true);
+
+            // reset
+            document.querySelector('.createForm__fileInput').value = null;
+            document.querySelector('.createForm__fileLabel').innerHTML = 'Choose an image again';
+            document.querySelector('.createForm__textInput').value = null;
 
             Cloudinary.upload([file], {
                 transformation: [{
@@ -80,7 +120,15 @@ if (Meteor.isClient) {
                     return console.error(err);
                 }
 
-                console.log(res);
+                Meteor.call("addIrony", {
+                    text: text,
+                    cloudinary: {
+                        id: res.public_id,
+                        url: res.url,
+                    }
+                });
+
+                console.log('finished', res);
                 Session.set('imgUrl', res.url);
             });
         }
