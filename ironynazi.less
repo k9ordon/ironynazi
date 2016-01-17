@@ -19,17 +19,52 @@
 
 .gui-button--hover() {
     cursor: pointer;
-    background-color: red;
+    background-color: #f3f3f3;
+}
+
+.gui-button--gray() {
+    color: darkgray;
+    border:3px solid darkgray;
+
+    &:hover {
+        .gui-button--gray--hover();
+    }
+}
+
+.gui-button--gray--hover() {
+    background:white;
+}
+
+.gui-button--black() {
+    color: #fff;
+    background:black;
+    border:3px solid black;
+
+    &:hover {
+        .gui-button--black--hover();
+    }
+}
+
+.gui-button--black--hover {
+    background:#3A3A3A;
 }
 
 
 .gui-input() {
-    color: darkgray;
+    color: black;
     background-color: white;
     display: inline-block;
-    border:3px solid darkgray;
+    border:3px solid black;
     padding:15px;
     // text-transform: uppercase;
+
+    &:placeholder-shown, &::-webkit-input-placeholder {
+        color:black;
+    }
+
+    &::-moz-placeholder, &::-ms-input-placeholder {
+        color:black;
+    }
 
     &:hover {
         .gui-input--hover();
@@ -42,29 +77,68 @@
 
 .gui-input--hover() {
     cursor: text;
-    // background-color: lightgray;
+    background-color: #f3f3f3;
     color:black;
 }
 
 .gui-input--focus() {
     outline: 0px;
     cursor: text;
-    color:black;
-    // background-color: red;
+    background-color: #f3f3f3;
 }
 
 .layout {
-    padding: 15px;
+    // padding: 15px;
+}
+
+.header {
+    text-align: center;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    background:#fff;
+    background: rgba(255, 255, 255, 0.6)
+    linear-gradient(to bottom,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,0) 100%
+    );
+
+    & + div, & + form {
+        margin-top:80px;
+    }
+
+    &__logo {
+        font-size: 18px;
+        margin-bottom:0;
+        text-transform: uppercase;
+        text-shadow: 0 0 3px #fff, 0 0 10px #fff;
+    }
+
+    &__subline {
+        margin-top:0;
+        text-transform: uppercase;
+        // color:darkgray;
+        // text-shadow: 0 0 3px #fff, 0 0 10px #fff;
+    }
 }
 
 .createForm {
     text-align: center;
+    // background: #F3F3F3;
+    padding:1em;
+
+    &__wrapper {
+        display: inline-block;
+        max-width: 400px;
+        width: 100%;
+        margin:0 auto;
+        padding:5px;
+    }
 
     &__fileLabel, &__textInput, &__submitButton {
         display: block;
-        max-width: 400px;
         width: 100%;
-        margin:15px auto;
     }
 
     &__fileInput {
@@ -100,8 +174,7 @@
 
     &__submitButton {
         .gui-button();
-        background:black;
-        color:white;
+        .gui-button--black();
     }
 }
 
@@ -110,22 +183,31 @@
 }
 
 .uploadedListItem {
-    .gui-input();
+    .gui-button();
+    .gui-button--gray();
+    margin:1em;
 }
 
 .ironyList {
     text-align: center;
 }
 .ironyListItem {
+    &__title {
+
+    }
+
     &__img {
         display: block;
         margin:0 auto;
     }
 
-    &__pre {
+    &__link {
         .gui-input();
+        .gui-button--gray();
+
         word-break: break-all;
         white-space: normal;
         max-width: 400px;
+        margin:1em;
     }
 }

@@ -9,21 +9,33 @@
 
 <template name="layout">
     <div class="layout">
+        {{> header}}
         {{> createForm}}
         {{> uploadedList}}
         {{> ironyList}}
     </div>
 </template>
 
+<template name="header">
+    <div class="header">
+        <h1 class="header__logo">Ironynazi</h1>
+        <p class="header__subline">We irony</p>
+    </div>
+</template>
+
 <template name="createForm">
     <form class="createForm" name="create">
+        <div class="createForm__wrapper">
+            <input name="file" type="file" id="file" class="createForm__fileInput" size="50" accept="iamge/*">
+            <label for="file" class="createForm__fileLabel">1. Choose an image</label>
+        </div>
 
-        <input name="file" type="file" id="file" class="createForm__fileInput" size="50" accept="iamge/*">
-        <label for="file" class="createForm__fileLabel">Choose an image</label>
-
-        <input type="text" class="createForm__textInput" placeholder="TYPE SOME WORDS">
-
-        <button type="submit" class="createForm__submitButton">Feel the irony</button>
+        <div class="createForm__wrapper">
+            <input type="text" class="createForm__textInput" placeholder="2. TYPE SOME WORDS">
+        </div>
+        <div class="createForm__wrapper">
+            <button type="submit" class="createForm__submitButton">3. Feel the irony</button>
+        </div>
     </form>
 </template>
 
@@ -50,7 +62,7 @@
 
 <template name="ironyList">
     <div class="ironyList">
-        <h3 class="ironyList__header">Latest</h3>
+        <h2 class="ironyList__header">Latest</h2>
         {{#each latest}}
             {{> ironyListItem}}
         {{/each}}
@@ -58,9 +70,10 @@
 </template>
 <template name="ironyListItem">
         <div class="ironyListItem">
+            <h3 class="ironyListItem__title">{{text}}</h3>
             {{#if cloudinary.url}}
                 <img class="ironyListItem__img" src="{{ cloudinary.url }}" />
-                <pre class="ironyListItem__pre">{{ cloudinary.url }}</pre>
+                <pre class="ironyListItem__link">{{ cloudinary.url }}</pre>
             {{else}}
                 <div class="ironyListItem__upload">
                     loading ...

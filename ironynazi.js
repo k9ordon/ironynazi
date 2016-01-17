@@ -79,7 +79,7 @@ if (Meteor.isClient) {
                 label = e.target.nextElementSibling,
                 fileName = e.target.value.split('\\').pop();
 
-            if (!fileName) fileName = 'Choose an image again';
+            if (!fileName) fileName = '1. Choose an image again';
 
             label.innerHTML = fileName;
         },
@@ -96,7 +96,7 @@ if (Meteor.isClient) {
 
             // reset
             document.querySelector('.createForm__fileInput').value = null;
-            document.querySelector('.createForm__fileLabel').innerHTML = 'Choose an image again';
+            document.querySelector('.createForm__fileLabel').innerHTML = '1. Choose an image again';
             document.querySelector('.createForm__textInput').value = null;
 
             Cloudinary.upload([file], {
